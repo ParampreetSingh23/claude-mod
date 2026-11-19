@@ -38,7 +38,8 @@ function snapshot(cwd) {
     throw error
   }
 
-  const paths = decoder.decode(git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z')).split('\0')
+  const paths = decoder.decode(git(root, 'ls-files', '--cached', '--others', '--exclude-standard',
+    '--exclude=/.claude-flow/docs-mod/status.json', '-z')).split('\0')
   const buffer = Buffer.alloc(64 * 1024)
   const directories = new Map()
   const entries = []

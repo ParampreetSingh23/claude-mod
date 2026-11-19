@@ -26,6 +26,9 @@ test('reviews net changes against the working tree at startup', async t => {
   write('already dirty.txt', 'starting local edit')
   write('untouched.txt', 'starting local edit to keep')
   write('already untracked.txt', 'starting untracked file')
+  const rufloStatus = '.claude-flow/docs-mod/status.json'
+  mkdirSync(join(repo, '.claude-flow', 'docs-mod'), { recursive: true })
+  write(rufloStatus, '{"status":"starting"}')
 
   const hooks = new Map()
   register((event, ...args) => hooks.set(event, args.at(-1)))
@@ -43,6 +46,7 @@ test('reviews net changes against the working tree at startup', async t => {
   await start(workspace)
   assert.match((await review()).text, /requires.*Git working tree/)
   await start(repo)
+  write(rufloStatus, '{"status":"running"}')
   assert.match((await review()).text, /No file changes/)
 
   write('already dirty.txt', 'session edit')
@@ -69,7 +73,7 @@ test('reviews net changes against the working tree at startup', async t => {
   assert.match(text, /Modified\s+binary\.dat/)
   assert.match(text, /Deleted\s+deleted\.txt/)
   assert.match(text, /Added\s+staged\.txt/)
-  assert.doesNotMatch(text, /ignored\.tmp|restored\.txt/)
+  assert.doesNotMatch(text, /ignored\.tmp|restored\.txt|\.claude-flow\/docs-mod\/status\.json/)
   if (process.platform !== 'win32') {
     assert.match(text, /Modified\s+untouched\.txt/)
     assert.match(text, /Added\s+link/)
@@ -78,4 +82,9 @@ test('reviews net changes against the working tree at startup', async t => {
     assert.doesNotMatch(text, /untouched\.txt/)
   }
   assert.deepEqual(readFileSync(join(repo, '.git', 'index')), index)
+
+  git('add', '--', rufloStatus)
+  await start(repo)
+  write(rufloStatus, '{"status":"finished"}')
+  assert.match((await review()).text, /Modified\s+\.claude-flow\/docs-mod\/status\.json/)
 })
