@@ -1,0 +1,14 @@
+{
+  "name": "session-hud-marketplace",
+  "description": "Install the Session HUD mod for Claude Code.",
+  "owner": {
+    "name": "Session HUD"
+  },
+  "plugins": [
+    {
+      "name": "session-hud",
+      "source": "./plugins/session-hud",
+      "description": "Shows remaining context, subscription usage, and recent skill and plugin activity in the terminal."
+    }
+  ]
+}

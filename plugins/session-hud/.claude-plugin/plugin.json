@@ -1,0 +1,5 @@
+{
+  "name": "session-hud",
+  "version": "0.1.0",
+  "description": "Shows context, subscription limits and recent skill and plugin activity above the terminal prompt."
+}
