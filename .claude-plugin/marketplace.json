@@ -9,6 +9,11 @@
       "name": "session-hud",
       "source": "./plugins/session-hud",
       "description": "Shows remaining context, subscription usage, and recent skill and plugin activity in the terminal."
+    },
+    {
+      "name": "session-diff",
+      "source": "./plugins/session-diff",
+      "description": "Review files added, modified, or deleted since your Claude Code session started."
     }
   ]
 }

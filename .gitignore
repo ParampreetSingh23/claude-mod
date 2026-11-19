@@ -1,2 +1,2 @@
-/plugins/session-hud/.claude-plugin/types/
-/plugins/session-hud/tsconfig.json
+/plugins/*/.claude-plugin/types/
+/plugins/*/tsconfig.json

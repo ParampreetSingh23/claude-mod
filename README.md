@@ -1,6 +1,6 @@
 # Claude Code Mods
 
-This repository is a Claude Code marketplace. Session HUD is the first available mod.
+This repository is a Claude Code marketplace for Session HUD and Session Diff.
 
 ## Install Session HUD
 
@@ -10,15 +10,15 @@ Run this from any directory. Claude Code fetches Session HUD from GitHub for you
 claude plugin install session-hud --marketplace ParampreetSingh23/claude-mod
 ```
 
-Start a new Claude Code session and approve Session HUD’s function hooks if prompted. The plugin is also available under `/plugin` after installation.
+Start a new Claude Code session and approve the mod’s function hooks if prompted. The plugin is also available under `/plugin` after installation.
 
 ## Install multiple mods
 
-Add any additional mod names after `session-hud` in the loop to install them together. Only `session-hud` is available today.
+Install both mods from the same marketplace:
 
 ```sh
 (
-  for mod in session-hud; do
+  for mod in session-hud session-diff; do
     claude plugin install "$mod" --marketplace ParampreetSingh23/claude-mod || exit 1
   done
 )
@@ -42,7 +42,7 @@ claude plugin marketplace update session-hud-marketplace
 claude plugin update session-hud@session-hud-marketplace
 ```
 
-## Run from a checkout
+### Run Session HUD from a checkout
 
 From the repository root, run:
 
@@ -57,3 +57,24 @@ Run the local test with Node.js 22.18 or later:
 ```sh
 node --test plugins/session-hud/tests/hud.test.mjs
 ```
+
+## Session Diff
+
+Install Session Diff from GitHub:
+
+```sh
+claude plugin install session-diff --marketplace ParampreetSingh23/claude-mod
+```
+
+Start Claude Code in a Git working tree, then run `/session-diff` when you want to review your changes.
+
+```text
+Session Diff · 3 files changed
+Modified  README.md
+Added     src/format.ts
+Deleted   src/legacy.ts
+```
+
+The mod compares the current working tree with a snapshot taken at startup. It includes tracked files and non-ignored untracked files, and detects further edits to files that were already dirty. Commits made during the session stay visible until you restore the starting contents. A rename appears as a deletion and an addition. Staging by itself doesn’t count as a file change.
+
+Session Diff requires the Claude Code terminal (2.1.328 or later), Git, and Node.js on `PATH`. The snapshot stays in memory and starts over when you restart Claude Code or reload the mod. The command shows paths and change types locally. It leaves the Git index and working files untouched. Submodule contents and ignored untracked files are outside the snapshot.

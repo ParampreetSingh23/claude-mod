@@ -1,0 +1,6 @@
+{
+  "name": "session-diff",
+  "version": "0.1.0",
+  "description": "Review the files added, modified, or deleted since your Claude Code session started.",
+  "author": { "name": "ParampreetSingh23" }
+}
