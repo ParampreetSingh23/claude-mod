@@ -1,8 +1,8 @@
 {
   "name": "session-hud-marketplace",
-  "description": "Install the Session HUD mod for Claude Code.",
+  "description": "A collection of mods for Claude Code.",
   "owner": {
-    "name": "Session HUD"
+    "name": "ParampreetSingh23"
   },
   "plugins": [
     {
